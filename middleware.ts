@@ -20,6 +20,12 @@ function isPublic(pathname: string): boolean {
   return false;
 }
 
+function isInternalVscodeAuthRequest(req: NextRequest): boolean {
+  if (req.nextUrl.pathname !== "/api/vscode-github-auth") return false;
+  const host = req.headers.get("host") || "";
+  return host.startsWith("127.0.0.1:3030") || host.startsWith("localhost:3030");
+}
+
 // Inline HMAC verify so middleware (Edge runtime) doesn't import node:crypto.
 async function verify(token: string | undefined, secret: string): Promise<{ role: "admin" | "demo" } | null> {
   if (!token) return null;
@@ -52,6 +58,7 @@ async function verify(token: string | undefined, secret: string): Promise<{ role
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  if (isInternalVscodeAuthRequest(req)) return NextResponse.next();
   if (isPublic(pathname)) return NextResponse.next();
   const secret = process.env.ATLAS_SESSION_SECRET;
   if (!secret) {
