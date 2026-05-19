@@ -1,0 +1,90 @@
+---
+# NVIDIA Isaac Sim (Omniverse) on Akash GPU — WebRTC headless streaming.
+#
+# Real image: nvcr.io/nvidia/isaac-sim:6.0.0-dev2  (8.74 GB compressed)
+# Runs headless with WebRTC streaming.
+#
+# Default ports (Isaac Sim 6.0 / Kit 110):
+#   - 49100: WebRTC signaling  (TCP)
+#   - 47998: WebRTC media stream (UDP)
+#   - 8011:  Kit HTTP services / REST API (TCP)
+#
+# NOTE: Isaac Sim WebRTC requires --network=host for the UDP media socket.
+#       On Akash (Kubernetes bridge networking), only the signaling (TCP)
+#       and HTTP services work. The UDP media stream may not connect.
+#       We set ISAACSIM_HOST=0.0.0.0 to bind all interfaces as best-effort.
+#
+# NGC pull credentials injected at deploy time via __NGC_API_KEY__ placeholder.
+version: "2.0"
+
+services:
+  isaacsim:
+    image: nvcr.io/nvidia/isaac-sim:6.0.0-dev2
+    credentials:
+      host: nvcr.io
+      username: "$oauthtoken"
+      password: "__NGC_API_KEY__"
+    env:
+      - ACCEPT_EULA=Y
+      - PRIVACY_CONSENT=Y
+      - ISAACSIM_HOST=0.0.0.0
+      - ISAACSIM_SIGNAL_PORT=49100
+      - ISAACSIM_STREAM_PORT=47998
+    command:
+      - "bash"
+      - "-c"
+      - |
+        mkdir -p /isaac-sim/.cache /isaac-sim/.nv/ComputeCache \
+                 /isaac-sim/.nvidia-omniverse/logs \
+                 /isaac-sim/.nvidia-omniverse/config \
+                 /isaac-sim/.local/share/ov/data \
+                 /isaac-sim/.local/share/ov/pkg
+        cd /isaac-sim && ./runheadless.sh -v
+    expose:
+      - port: 49100
+        as: 49100
+        to:
+          - global: true
+      - port: 47998
+        as: 47998
+        proto: udp
+        to:
+          - global: true
+      - port: 8011
+        as: 80
+        to:
+          - global: true
+
+profiles:
+  compute:
+    isaacsim:
+      resources:
+        cpu:
+          units: 8
+        memory:
+          size: 32Gi
+        storage:
+          - size: 100Gi
+        gpu:
+          units: 1
+          attributes:
+            vendor:
+              nvidia:
+                - model: rtx4090
+                - model: rtxa6000
+                - model: a100
+                - model: h100
+                - model: rtx3090
+                - model: a40
+  placement:
+    dcloud:
+      pricing:
+        isaacsim:
+          denom: uact
+          amount: 200000
+
+deployment:
+  isaacsim:
+    dcloud:
+      profile: isaacsim
+      count: 1

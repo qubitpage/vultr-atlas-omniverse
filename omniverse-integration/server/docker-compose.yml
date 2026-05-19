@@ -1,0 +1,54 @@
+# Omniverse Kit App Streaming — Vultr GPU host stack
+#
+# Deployed by scripts/provision_gpu.py onto a fresh Vultr Cloud GPU instance.
+# Requires: NVIDIA driver >= 535, nvidia-container-toolkit, docker compose v2.
+#
+# The kit-app-streaming image is pulled from nvcr.io and needs an NGC API key
+# (`docker login nvcr.io -u '$oauthtoken' -p $NGC_API_KEY`).
+
+services:
+  kit-app:
+    # Official NVIDIA Omniverse Kit App Streaming reference image.
+    # Use a Kit-based app (USD Presenter is the lightest, USD Composer the heaviest).
+    image: nvcr.io/nvidia/omniverse/kit-app-streaming:106.5.0
+    container_name: omniverse-kit
+    restart: unless-stopped
+    runtime: nvidia
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: graphics,compute,utility,video
+      OMNI_KIT_ACCEPT_EULA: "Y"
+      OMNI_KIT_ALLOW_ROOT: "1"
+      # Run USD Presenter by default; swap for omni.usd_composer.kit for full DCC.
+      KIT_APP: ${KIT_APP:-omni.usd_presenter.kit}
+    ports:
+      - "127.0.0.1:31080:31080"   # streaming media (WebRTC TURN/STUN bridges to here)
+      - "127.0.0.1:8211:8211"     # signaling
+    volumes:
+      - kit-cache:/root/.cache/ov
+      - kit-data:/root/.local/share/ov
+      - ./usd:/workspace/usd:ro   # USD scenes mounted read-only into the container
+    shm_size: "2gb"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+
+  signaling:
+    # Public-facing nginx that terminates TLS and proxies WebSocket signaling
+    # + WebRTC media to the Kit container above. Letsencrypt cert mounted in.
+    image: nginx:1.27-alpine
+    container_name: omniverse-signaling
+    restart: unless-stopped
+    depends_on: [kit-app]
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+
+volumes:
+  kit-cache:
+  kit-data:

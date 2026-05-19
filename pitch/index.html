@@ -1,0 +1,898 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vultr Atlas Pitch</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #101418;
+      --panel: #182028;
+      --panel-strong: #202a33;
+      --ink: #f5f7f8;
+      --muted: #a9b5bd;
+      --line: rgba(255, 255, 255, 0.13);
+      --teal: #37d8c6;
+      --green: #7bdc75;
+      --amber: #f5b84b;
+      --coral: #ff7f6e;
+      --sky: #5fb4ff;
+      --violet: #b895ff;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.34);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(55, 216, 198, 0.08), transparent 420px),
+        radial-gradient(circle at 82% 8%, rgba(245, 184, 75, 0.12), transparent 280px),
+        var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+      letter-spacing: 0;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .page {
+      width: min(1440px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 44px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 0 18px;
+      background: linear-gradient(180deg, rgba(16, 20, 24, 0.96), rgba(16, 20, 24, 0.72));
+      backdrop-filter: blur(16px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(55, 216, 198, 0.25), transparent),
+        var(--panel-strong);
+      display: grid;
+      place-items: center;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+    }
+
+    .mark svg { width: 26px; height: 26px; }
+
+    .brand-title {
+      font-weight: 800;
+      font-size: 1.02rem;
+      overflow-wrap: anywhere;
+    }
+
+    .brand-subtitle {
+      color: var(--muted);
+      font-size: 0.82rem;
+      overflow-wrap: anywhere;
+    }
+
+    .nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav a,
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 11px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      font-size: 0.84rem;
+      white-space: nowrap;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.02fr) minmax(360px, 0.98fr);
+      gap: 18px;
+      align-items: stretch;
+      min-height: 560px;
+    }
+
+    .box {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025)), var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-copy {
+      padding: 34px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 28px;
+      min-width: 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      max-width: 100%;
+      color: var(--teal);
+      background: rgba(55, 216, 198, 0.08);
+      border: 1px solid rgba(55, 216, 198, 0.22);
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1 {
+      margin-top: 18px;
+      max-width: 13ch;
+      font-size: 3.25rem;
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      margin-top: 18px;
+      color: #dfe7ea;
+      font-size: 1.12rem;
+      max-width: 64ch;
+      overflow-wrap: anywhere;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .button {
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      min-height: 44px;
+      padding: 11px 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #f5f7f8;
+      color: #101418;
+      font-weight: 800;
+      font-size: 0.92rem;
+    }
+
+    .button.secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--ink);
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 13px;
+      min-height: 96px;
+      background: rgba(255, 255, 255, 0.035);
+      overflow: hidden;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 1.6rem;
+      line-height: 1.1;
+      overflow-wrap: anywhere;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      overflow-wrap: anywhere;
+    }
+
+    .visual {
+      position: relative;
+      min-height: 560px;
+      background:
+        linear-gradient(180deg, rgba(95, 180, 255, 0.09), transparent 56%),
+        #121920;
+    }
+
+    #networkCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .radar-panel {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .radar-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(16, 20, 24, 0.78);
+      backdrop-filter: blur(18px);
+      padding: 12px;
+      min-height: 96px;
+      overflow: hidden;
+    }
+
+    .radar-card b {
+      display: block;
+      font-size: 0.92rem;
+      overflow-wrap: anywhere;
+    }
+
+    .radar-card small {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      overflow-wrap: anywhere;
+    }
+
+    .status-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      color: var(--green);
+      font-size: 0.82rem;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 18px currentColor;
+    }
+
+    section { margin-top: 18px; }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.65fr) minmax(0, 1fr);
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 18px;
+    }
+
+    .section-head .box,
+    .pitch-grid .box,
+    .demo-grid .box,
+    .roadmap-grid .box {
+      padding: 22px;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      line-height: 1.13;
+      overflow-wrap: anywhere;
+    }
+
+    h3 {
+      font-size: 1.04rem;
+      line-height: 1.2;
+      overflow-wrap: anywhere;
+    }
+
+    .body-copy {
+      color: var(--muted);
+      margin-top: 10px;
+      overflow-wrap: anywhere;
+    }
+
+    .pitch-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .accent {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      color: #101418;
+      font-weight: 900;
+    }
+
+    .accent.teal { background: var(--teal); }
+    .accent.green { background: var(--green); }
+    .accent.amber { background: var(--amber); }
+    .accent.coral { background: var(--coral); }
+    .accent.sky { background: var(--sky); }
+    .accent.violet { background: var(--violet); }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .script-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .script-step {
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.035);
+      overflow: hidden;
+    }
+
+    .step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: rgba(55, 216, 198, 0.13);
+      color: var(--teal);
+      font-weight: 900;
+    }
+
+    .diagram {
+      min-height: 390px;
+      display: grid;
+      grid-template-rows: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .layer {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.035);
+      overflow: hidden;
+    }
+
+    .layer strong,
+    .layer span { overflow-wrap: anywhere; }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .chip {
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      padding: 6px 8px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.04);
+      font-size: 0.78rem;
+      white-space: nowrap;
+    }
+
+    .roadmap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .quote {
+      border-left: 4px solid var(--teal);
+    }
+
+    .footer {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      padding: 18px 22px;
+    }
+
+    @media (max-width: 880px) {
+      .hero,
+      .section-head,
+      .demo-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .visual { min-height: 470px; }
+
+      .pitch-grid,
+      .roadmap-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 1080px) and (min-width: 881px) {
+      .hero {
+        grid-template-columns: minmax(0, 0.95fr) minmax(300px, 1.05fr);
+      }
+
+      .hero-copy { padding: 26px; }
+      h1 { font-size: 2.55rem; max-width: 14ch; }
+      .lead { font-size: 1rem; }
+      .mini-grid { grid-template-columns: 1fr; }
+      .visual { min-height: 560px; }
+      .pitch-grid,
+      .roadmap-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 720px) {
+      .page { width: min(100% - 20px, 1440px); padding-top: 12px; }
+      .topbar { position: static; align-items: flex-start; flex-direction: column; }
+      .nav { justify-content: flex-start; width: 100%; }
+      .nav a { flex: 1 1 auto; text-align: center; }
+      .hero-copy { padding: 22px; }
+      h1 { font-size: 2.28rem; max-width: 12ch; }
+      .lead { font-size: 1rem; }
+      .mini-grid,
+      .radar-panel,
+      .pitch-grid,
+      .roadmap-grid { grid-template-columns: 1fr; }
+      .visual { min-height: 540px; }
+      .radar-panel { position: relative; left: auto; right: auto; bottom: auto; padding: 18px; margin-top: 250px; }
+      .layer { grid-template-columns: 1fr; }
+      .chip-row { justify-content: flex-start; }
+      .footer { grid-template-columns: 1fr; }
+    }
+
+    @page {
+      size: A4 landscape;
+      margin: 10mm;
+    }
+
+    @media print {
+      html, body {
+        width: 100%;
+        background: #101418;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .page {
+        width: 100%;
+        padding: 0;
+      }
+
+      .topbar {
+        position: relative;
+        padding: 0 0 10px;
+        background: #101418;
+        break-inside: avoid;
+      }
+
+      .nav { display: none; }
+
+      section {
+        margin-top: 10px;
+      }
+
+      .hero,
+      .section-head,
+      .demo-grid {
+        grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      }
+
+      .hero {
+        min-height: auto;
+        break-inside: avoid;
+      }
+
+      #value,
+      #demo,
+      #build {
+        break-before: page;
+      }
+
+      .box,
+      .metric,
+      .radar-card,
+      .script-step,
+      .layer {
+        break-inside: avoid;
+        box-shadow: none;
+      }
+
+      .hero-copy,
+      .section-head .box,
+      .pitch-grid .box,
+      .demo-grid .box,
+      .roadmap-grid .box {
+        padding: 16px;
+      }
+
+      h1 {
+        font-size: 2.08rem;
+        max-width: 15ch;
+      }
+
+      h2 { font-size: 1.38rem; }
+      h3 { font-size: 0.98rem; }
+
+      .lead,
+      .body-copy,
+      .script-step p {
+        font-size: 0.88rem;
+      }
+
+      .visual {
+        min-height: 430px;
+      }
+
+      .radar-panel {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        gap: 8px;
+      }
+
+      .mini-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .metric {
+        min-height: 82px;
+        padding: 10px;
+      }
+
+      .metric strong { font-size: 1.24rem; }
+      .metric span { font-size: 0.72rem; }
+
+      .pitch-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .roadmap-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .script-list { gap: 8px; }
+      .script-step { padding: 9px; }
+      .diagram { min-height: 352px; gap: 8px; }
+      .layer { padding: 10px; }
+      .footer { margin-top: 10px; padding: 14px 16px; }
+
+      .button,
+      .nav a,
+      .pill,
+      .chip,
+      .eyebrow {
+        border-color: rgba(255, 255, 255, 0.18);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Vultr Atlas pitch home">
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 3l11 6.4v13.2L16 29 5 22.6V9.4L16 3z" stroke="#37d8c6" stroke-width="2" />
+            <path d="M10 18.2l5.5 3.2L23 10.8" stroke="#f5f7f8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+        <span>
+          <span class="brand-title">Vultr Atlas</span><br />
+          <span class="brand-subtitle">Global infrastructure command center</span>
+        </span>
+      </a>
+      <nav class="nav" aria-label="Pitch sections">
+        <a href="#value">Value</a>
+        <a href="#demo">Demo</a>
+        <a href="#build">Build</a>
+        <a href="#ask">Ask</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-label="Vultr Atlas pitch hero">
+        <div class="box hero-copy">
+          <div>
+            <span class="eyebrow">Live Vultr API plus visual network intelligence</span>
+            <h1>Vultr Atlas turns cloud sprawl into a living map.</h1>
+            <p class="lead">A browser-native surveillance cockpit that shows every Vultr region, city, datacenter surface, server family, API inventory, and network path in one operational view.</p>
+          </div>
+          <div class="hero-actions">
+            <a class="button" href="../omniverse-integration/README.md">Open project notes</a>
+            <a class="button secondary" href="https://atlas.qubitpage.com/omniverse/">Live Omniverse demo</a>
+          </div>
+          <div class="mini-grid" aria-label="Current proof points">
+            <div class="metric"><strong>33</strong><span>Global Vultr regions tracked from live API data.</span></div>
+            <div class="metric"><strong>20/20</strong><span>Endpoint groups mapped for infrastructure discovery.</span></div>
+            <div class="metric"><strong>3 modes</strong><span>3D globe, 2D world map, and datacenter interior view.</span></div>
+          </div>
+        </div>
+
+        <div class="box visual" aria-label="Animated network visual">
+          <canvas id="networkCanvas" aria-hidden="true"></canvas>
+          <div class="radar-panel">
+            <div class="radar-card">
+              <b>Region intelligence</b>
+              <small>Availability, city, country, plan slots, and resource density.</small>
+              <span class="status-row"><span class="dot"></span>Live snapshot ready</span>
+            </div>
+            <div class="radar-card">
+              <b>Fleet telemetry</b>
+              <small>CPU, RAM, disk, bandwidth, instances, firewalls, VPC, and storage.</small>
+              <span class="status-row" style="color: var(--amber)"><span class="dot"></span>Capacity visible</span>
+            </div>
+            <div class="radar-card">
+              <b>API command map</b>
+              <small>Account, regions, plans, OS, apps, VPC, backups, snapshots, and more.</small>
+              <span class="status-row" style="color: var(--sky)"><span class="dot"></span>20 surfaces mapped</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="value" aria-label="Value proposition">
+        <div class="section-head">
+          <div class="box">
+            <h2>The pitch in one sentence</h2>
+            <p class="body-copy">Vultr Atlas is the operations layer that makes a global Vultr footprint understandable, presentable, and actionable before teams touch the terminal.</p>
+          </div>
+          <div class="box quote">
+            <h3>Why it matters</h3>
+            <p class="body-copy">Cloud consoles are built around tables. Atlas is built around mental models: where the infrastructure lives, how it is connected, which resources are active, and what the next operational move should be.</p>
+          </div>
+        </div>
+
+        <div class="pitch-grid">
+          <div class="box">
+            <div class="accent teal">1</div>
+            <h3>Global clarity</h3>
+            <p class="body-copy">Real countries, continents, cities, and region markers make the network readable for operators, customers, and leadership.</p>
+          </div>
+          <div class="box">
+            <div class="accent green">2</div>
+            <h3>Operational proof</h3>
+            <p class="body-copy">The dashboard is backed by server-side Vultr API data, sanitized for the browser, and refreshed as a live infrastructure snapshot.</p>
+          </div>
+          <div class="box">
+            <div class="accent amber">3</div>
+            <h3>Datacenter storytelling</h3>
+            <p class="body-copy">Double-click a zone to move from world view into racks, servers, network spine, plans, instances, and active resources.</p>
+          </div>
+          <div class="box">
+            <div class="accent coral">4</div>
+            <h3>Sales-ready theatre</h3>
+            <p class="body-copy">Atlas gives hosting, AI, marketplace, and managed cloud conversations a premium visual surface that people remember.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="demo" aria-label="Demo script">
+        <div class="demo-grid">
+          <div class="box">
+            <h2>Five-minute demo flow</h2>
+            <p class="body-copy">The page is designed to move from big-picture confidence to concrete infrastructure detail without breaking the story.</p>
+            <div class="script-list">
+              <div class="script-step"><span class="step-num">1</span><p><strong>Start on the globe.</strong><br />Show a real global Vultr footprint with active region markers, animated network lines, and health state.</p></div>
+              <div class="script-step"><span class="step-num">2</span><p><strong>Switch to the 2D operations map.</strong><br />Use the real world map for management mode, readable city markers, and callout labels for dense areas.</p></div>
+              <div class="script-step"><span class="step-num">3</span><p><strong>Enter a datacenter.</strong><br />Double-click a region to show racks, server blades, resource nodes, and plan capacity for that city.</p></div>
+              <div class="script-step"><span class="step-num">4</span><p><strong>Open the API panel.</strong><br />Prove that Atlas is connected to broad Vultr coverage, not a static mockup.</p></div>
+              <div class="script-step"><span class="step-num">5</span><p><strong>Close with the product vision.</strong><br />Atlas becomes the command layer for monitoring, capacity planning, customer demos, and managed infrastructure.</p></div>
+            </div>
+          </div>
+
+          <div class="box diagram" aria-label="Product layers">
+            <div class="layer">
+              <div><strong>Presentation layer</strong><br /><span class="body-copy">3D globe, 2D real map, responsive touch UI.</span></div>
+              <div class="chip-row"><span class="chip">Three.js</span><span class="chip">D3</span></div>
+            </div>
+            <div class="layer">
+              <div><strong>Operations layer</strong><br /><span class="body-copy">Datacenter view, resource cards, city search, region tour.</span></div>
+              <div class="chip-row"><span class="chip">Racks</span><span class="chip">Metrics</span></div>
+            </div>
+            <div class="layer">
+              <div><strong>Data layer</strong><br /><span class="body-copy">Sanitized server-side Vultr API route with live snapshot fallback.</span></div>
+              <div class="chip-row"><span class="chip">Next.js</span><span class="chip">API</span></div>
+            </div>
+            <div class="layer">
+              <div><strong>Business layer</strong><br /><span class="body-copy">Sales demos, uptime room, customer portal, and managed cloud console.</span></div>
+              <div class="chip-row"><span class="chip">Pitch</span><span class="chip">Product</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="build" aria-label="Build roadmap">
+        <div class="section-head">
+          <div class="box">
+            <h2>What is already real</h2>
+            <p class="body-copy">The current Omniverse dashboard is live, browser-native, and connected to the Vultr API through Atlas. It already renders the global map, network modes, datacenter view, and API coverage.</p>
+          </div>
+          <div class="box">
+            <h2>What comes next</h2>
+            <p class="body-copy">The next phase turns the visual cockpit into a daily operating console: alerts, history, per-customer views, billing context, inventory change tracking, and guided actions.</p>
+          </div>
+        </div>
+        <div class="roadmap-grid">
+          <div class="box">
+            <div class="accent sky">A</div>
+            <h3>Monitoring mode</h3>
+            <p class="body-copy">Health checks, latency probes, uptime history, incident timeline, and region-level alert overlays.</p>
+          </div>
+          <div class="box">
+            <div class="accent violet">B</div>
+            <h3>Inventory intelligence</h3>
+            <p class="body-copy">Track created, deleted, idle, overused, and underused assets across instances, storage, VPC, firewalls, and backups.</p>
+          </div>
+          <div class="box">
+            <div class="accent green">C</div>
+            <h3>Customer portal</h3>
+            <p class="body-copy">Tenant-safe views for customers to see their hosted resources, region footprint, SLA posture, and support status.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="ask" aria-label="Close">
+        <div class="box footer">
+          <div>
+            <h2>The ask</h2>
+            <p class="body-copy">Fund the next build sprint to convert Vultr Atlas from a powerful live demo into a production command center: persistent metrics, alerting, customer access, and guided cloud actions.</p>
+          </div>
+          <a class="button" href="https://atlas.qubitpage.com/omniverse/">Launch live demo</a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('networkCanvas');
+    const ctx = canvas.getContext('2d');
+    const regions = [
+      { name: 'New York', x: 0.28, y: 0.38, c: '#37d8c6' },
+      { name: 'London', x: 0.48, y: 0.31, c: '#5fb4ff' },
+      { name: 'Frankfurt', x: 0.54, y: 0.35, c: '#7bdc75' },
+      { name: 'Warsaw', x: 0.59, y: 0.29, c: '#f5b84b' },
+      { name: 'Tokyo', x: 0.78, y: 0.43, c: '#ff7f6e' },
+      { name: 'Singapore', x: 0.70, y: 0.62, c: '#b895ff' },
+      { name: 'Sydney', x: 0.79, y: 0.74, c: '#37d8c6' },
+      { name: 'Sao Paulo', x: 0.39, y: 0.72, c: '#f5b84b' }
+    ];
+    const links = [[0,1], [1,2], [2,3], [2,4], [4,5], [5,6], [0,7], [7,5], [3,4]];
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      const ratio = window.devicePixelRatio || 1;
+      canvas.width = Math.max(1, Math.floor(rect.width * ratio));
+      canvas.height = Math.max(1, Math.floor(rect.height * ratio));
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    }
+
+    function drawGrid(width, height) {
+      ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+      ctx.lineWidth = 1;
+      for (let x = 30; x < width; x += 42) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke();
+      }
+      for (let y = 30; y < height; y += 42) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
+      }
+    }
+
+    function point(region, width, height) {
+      return { x: region.x * width, y: region.y * height };
+    }
+
+    function draw(time) {
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
+      ctx.clearRect(0, 0, width, height);
+      drawGrid(width, height);
+
+      ctx.save();
+      ctx.globalAlpha = 0.45;
+      ctx.strokeStyle = '#5fb4ff';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.ellipse(width * 0.52, height * 0.50, width * 0.33, height * 0.24, -0.12, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.ellipse(width * 0.52, height * 0.50, width * 0.24, height * 0.33, 0.56, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+
+      links.forEach((link, index) => {
+        const a = point(regions[link[0]], width, height);
+        const b = point(regions[link[1]], width, height);
+        const pulse = (Math.sin(time * 0.002 + index) + 1) / 2;
+        ctx.strokeStyle = `rgba(55, 216, 198, ${0.18 + pulse * 0.32})`;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        const midX = (a.x + b.x) / 2;
+        const midY = (a.y + b.y) / 2 - 45;
+        ctx.moveTo(a.x, a.y);
+        ctx.quadraticCurveTo(midX, midY, b.x, b.y);
+        ctx.stroke();
+      });
+
+      regions.forEach((region, index) => {
+        const p = point(region, width, height);
+        const pulse = (Math.sin(time * 0.003 + index * 0.9) + 1) / 2;
+        ctx.fillStyle = region.c;
+        ctx.shadowColor = region.c;
+        ctx.shadowBlur = 18 + pulse * 18;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 6 + pulse * 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        ctx.fillStyle = 'rgba(245,247,248,0.88)';
+        ctx.font = '700 12px Inter, system-ui, sans-serif';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(region.name, p.x + 12, p.y);
+      });
+
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+    requestAnimationFrame(draw);
+  </script>
+</body>
+</html>

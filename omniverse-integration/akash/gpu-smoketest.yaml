@@ -1,0 +1,58 @@
+---
+# Akash GPU smoketest — verifies the Console API + GPU provisioning end-to-end.
+# Spawns a small CUDA container that runs nvidia-smi every 10s and serves the
+# result on port 80. Costs ~$0.30/hr on a typical RTX 4090 provider.
+version: "2.0"
+
+services:
+  gpu:
+    image: nvidia/cuda:12.4.1-base-ubuntu22.04
+    command:
+      - "sh"
+      - "-c"
+      - |
+        apt-get update && apt-get install -y --no-install-recommends busybox-static
+        mkdir -p /srv
+        ( while true; do
+            { echo "HTTP/1.1 200 OK"; echo "Content-Type: text/plain"; echo ""; nvidia-smi; } | busybox nc -lp 80 -q 1
+          done )
+    expose:
+      - port: 80
+        as: 80
+        to:
+          - global: true
+
+profiles:
+  compute:
+    gpu:
+      resources:
+        cpu:
+          units: 2
+        memory:
+          size: 4Gi
+        storage:
+          - size: 10Gi
+        gpu:
+          units: 1
+          attributes:
+            vendor:
+              nvidia:
+                - model: rtx4090
+                - model: rtx3090
+                - model: rtxa6000
+                - model: a5000
+                - model: a40
+                - model: a4000
+                - model: t4
+  placement:
+    dcloud:
+      pricing:
+        gpu:
+          denom: uact
+          amount: 100000   # ~$60/hr ceiling. uact=microUSD per block (~6s). Providers bid below market.
+
+deployment:
+  gpu:
+    dcloud:
+      profile: gpu
+      count: 1
