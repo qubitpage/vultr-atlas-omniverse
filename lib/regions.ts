@@ -24,6 +24,7 @@ export const REGION_GEO: Record<string, RegionGeo> = {
   mel: { id: "mel", lat: -37.8136, lon: 144.9631 },
   mex: { id: "mex", lat: 19.4326, lon: -99.1332 },
   mia: { id: "mia", lat: 25.7617, lon: -80.1918 },
+  mxp: { id: "mxp", lat: 45.4642, lon: 9.19 },
   nrt: { id: "nrt", lat: 35.7647, lon: 140.3863 },
   ord: { id: "ord", lat: 41.9742, lon: -87.9073 },
   osa: { id: "osa", lat: 34.6937, lon: 135.5023 },
