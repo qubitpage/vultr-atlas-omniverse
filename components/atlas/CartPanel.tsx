@@ -70,7 +70,7 @@ export function CartPanel() {
             onClick={() => setOpen(false)}
             className="fixed inset-0 z-40 bg-bg/60 backdrop-blur-sm"
           />
-          <div className="fixed right-4 top-16 z-50 flex max-h-[calc(100vh-5rem)] w-[min(520px,calc(100vw-2rem))] flex-col rounded-lg border border-accent/40 bg-panel/95 p-4 shadow-glow backdrop-blur">
+          <div className="fixed inset-x-2 bottom-2 top-14 z-50 flex w-auto flex-col rounded-lg border border-accent/40 bg-panel/95 p-3 shadow-glow backdrop-blur sm:bottom-auto sm:left-auto sm:right-4 sm:top-16 sm:max-h-[calc(100dvh-5rem)] sm:w-[min(520px,calc(100vw-2rem))] sm:p-4">
             <div className="flex items-center justify-between border-b border-line/60 pb-2">
               <div className="flex items-center gap-2">
                 <ShoppingCart className="h-4 w-4 text-accent" />
@@ -130,11 +130,11 @@ export function CartPanel() {
                     );
                   })}
                 </div>
-                <div className="mt-3 flex items-center justify-between gap-3 border-t border-line/60 pt-3">
+                <div className="mt-3 flex flex-col gap-3 border-t border-line/60 pt-3 sm:flex-row sm:items-center sm:justify-between">
                   <div className="text-sm text-gray-300">
                     Total <span className="text-base font-semibold text-accent">${total}/mo</span>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap gap-2">
                     <button
                       onClick={clearCart}
                       disabled={deploying}

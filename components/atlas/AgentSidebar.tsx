@@ -462,16 +462,16 @@ export function AgentSidebar() {
   const voiceBusy = voiceState !== "idle";
 
   return (
-    <div className="flex h-full flex-col rounded-lg border border-line bg-panel/70 backdrop-blur">
-      <div className="flex items-center gap-2 border-b border-line p-3">
+    <div className="flex h-full min-h-0 flex-col rounded-lg border border-line bg-panel/70 backdrop-blur">
+      <div className="flex shrink-0 items-center gap-2 border-b border-line p-2.5 sm:p-3">
         <Sparkles className="h-4 w-4 text-accent" />
         <span className="text-sm font-semibold">Atlas Copilot</span>
-        <span className="ml-auto inline-flex items-center gap-1 rounded-full border border-line bg-bg/60 px-2 py-0.5 text-[10px] text-gray-400">
+        <span className="ml-auto inline-flex shrink-0 items-center gap-1 rounded-full border border-line bg-bg/60 px-2 py-0.5 text-[10px] text-gray-400">
           <Shield className="h-3 w-3 text-ok" /> human-gated
         </span>
       </div>
 
-      <div ref={scroller} className="flex-1 space-y-3 overflow-auto scrollbar-thin p-3 text-sm">
+      <div ref={scroller} className="min-h-0 flex-1 space-y-3 overflow-auto scrollbar-thin p-2.5 text-sm sm:p-3">
         {chat.length === 0 && (
           <div className="rounded-md border border-dashed border-line p-3 text-xs text-gray-400">
             Try: <em>“Suggest the cheapest plan for a Postgres-heavy API in Frankfurt under $40/mo.”</em><br />
@@ -488,8 +488,8 @@ export function AgentSidebar() {
               className={cn(
                 "rounded-md p-2.5 text-xs leading-relaxed",
                 m.role === "user"
-                  ? "ml-6 bg-accent/10 text-gray-100"
-                  : "mr-6 bg-bg/50 text-gray-200",
+                  ? "ml-2 bg-accent/10 text-gray-100 sm:ml-6"
+                  : "mr-2 bg-bg/50 text-gray-200 sm:mr-6",
               )}
             >
               <div className="whitespace-pre-wrap">{display || (m.role === "model" ? "…" : "")}</div>
@@ -528,7 +528,7 @@ export function AgentSidebar() {
           );
         })}
         {voiceChoices.length > 0 && (
-          <div className="mr-6 rounded-md border border-accent/40 bg-accent/5 p-2 text-xs text-gray-200">
+          <div className="mr-2 rounded-md border border-accent/40 bg-accent/5 p-2 text-xs text-gray-200 sm:mr-6">
             <div className="mb-2 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-accent">
               <Volume2 className="h-3 w-3" /> Voice instance choices
             </div>
@@ -554,7 +554,7 @@ export function AgentSidebar() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && (e.preventDefault(), send())}
             placeholder="Ask Atlas… (Enter to send)"
-            className="flex-1 rounded-md border border-line bg-bg/60 px-2.5 py-1.5 text-xs outline-none focus:border-accent"
+            className="min-w-0 flex-1 rounded-md border border-line bg-bg/60 px-2.5 py-1.5 text-xs outline-none focus:border-accent"
           />
           <button
             disabled={voiceState === "transcribing" || voiceState === "acting"}
@@ -580,7 +580,7 @@ export function AgentSidebar() {
         </div>
         <div className="mt-1 flex items-center justify-between gap-2 text-[10px] text-gray-500">
           <span>
-            Powered by Gemini · Speechmatics voice · <span className="text-accent">You approve every action.</span>
+            <span className="hidden sm:inline">Powered by Gemini · Speechmatics voice · </span><span className="text-accent">You approve every action.</span>
           </span>
           {voiceBusy && <span className="text-accent">{voiceState === "recording" ? "listening" : voiceState}</span>}
         </div>

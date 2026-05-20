@@ -44,7 +44,7 @@ export function ServiceNavigator() {
   const active = useAtlas((s) => s.activeCategory);
   const setActiveCategory = useAtlas((s) => s.setActiveCategory);
   return (
-    <div className="absolute left-3 top-[60px] z-20 flex flex-col gap-1 rounded-lg border border-line bg-panel/85 p-1 backdrop-blur lg:top-[60px]">
+    <div className="absolute left-2 top-[58px] z-20 flex max-h-[calc(100%-66px)] flex-col gap-1 overflow-auto rounded-lg border border-line bg-panel/85 p-1 backdrop-blur sm:left-3 sm:top-[60px] lg:top-[60px]">
       {NAV.map((n) => {
         const Icon = n.icon;
         const sel = active === n.id;
@@ -54,7 +54,7 @@ export function ServiceNavigator() {
             onClick={() => setActiveCategory(sel ? null : n.id)}
             title={n.label}
             className={cn(
-              "group relative flex h-10 w-10 items-center justify-center rounded-md transition",
+              "group relative flex h-9 w-9 shrink-0 items-center justify-center rounded-md transition sm:h-10 sm:w-10",
               sel ? "bg-accent text-bg shadow-glow" : "text-gray-400 hover:bg-line/50 hover:text-gray-100",
             )}
           >
@@ -147,7 +147,7 @@ export function ServicePanel() {
   const title = NAV.find((n) => n.id === active)?.label ?? "Services";
 
   return (
-    <div className="absolute left-16 top-[60px] z-20 flex h-[calc(100%-72px)] w-full max-w-[440px] flex-col rounded-lg border border-accent/40 bg-bg/95 shadow-glow backdrop-blur lg:max-w-[480px]">
+    <div className="absolute left-12 right-2 top-[58px] z-20 flex h-[calc(100%-66px)] w-auto max-w-none flex-col rounded-lg border border-accent/40 bg-bg/95 shadow-glow backdrop-blur sm:left-16 sm:right-auto sm:top-[60px] sm:h-[calc(100%-72px)] sm:w-full sm:max-w-[440px] lg:max-w-[480px]">
       <header className="flex items-center gap-2 border-b border-line px-4 py-3">
         <div>
           <div className="font-mono text-[10px] uppercase tracking-widest text-accent">{title}</div>

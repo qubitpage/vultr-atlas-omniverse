@@ -124,12 +124,12 @@ export function RegionConfigurator({
 
   return (
     <div className={cn("flex h-full flex-col gap-3", variant === "overlay" ? "p-3" : "")}>
-      <header className="flex items-center gap-3 rounded-lg border border-line bg-panel/80 px-4 py-2 backdrop-blur">
-        <div>
+      <header className="flex flex-wrap items-center gap-2 rounded-lg border border-line bg-panel/80 px-3 py-2 backdrop-blur sm:gap-3 sm:px-4">
+        <div className="min-w-0 flex-1">
           <div className="font-mono text-[10px] uppercase tracking-widest text-accent">{regionId.toUpperCase()} · configurator</div>
-          <h2 className="text-lg font-semibold leading-tight">{region.city}, {region.country}</h2>
+          <h2 className="truncate text-base font-semibold leading-tight sm:text-lg">{region.city}, {region.country}</h2>
         </div>
-        <div className="ml-auto flex flex-wrap items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest">
+        <div className="order-3 flex w-full flex-wrap items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest sm:order-none sm:ml-auto sm:w-auto">
           <span className={cn("rounded border px-2 py-0.5",
             status?.status === "ok" && "border-ok/40 text-ok",
             status?.status === "planned" && "border-warn/40 text-warn",
@@ -144,7 +144,7 @@ export function RegionConfigurator({
         </button>
       </header>
 
-      <div className="grid min-h-0 flex-1 grid-cols-1 gap-3 overflow-auto sm:overflow-hidden md:grid-cols-[200px_1fr] xl:grid-cols-[240px_1fr_280px]">
+      <div className="grid min-h-0 flex-1 grid-cols-1 gap-3 overflow-auto md:grid-cols-[200px_1fr] md:overflow-hidden xl:grid-cols-[240px_1fr_280px]">
         <div className="flex flex-col gap-2 overflow-auto pr-1">
           <Panel title="Plan family">
             <div className="inline-flex w-full overflow-hidden rounded-md border border-line">
@@ -217,7 +217,7 @@ export function RegionConfigurator({
                 </div>
                 <div className="text-[10px] text-gray-500">{list.length} · from ${list[0]?.monthly_cost}/mo</div>
               </div>
-              <div className="grid grid-cols-2 gap-1.5 p-1.5 xl:grid-cols-3">
+              <div className="grid grid-cols-1 gap-1.5 p-1.5 sm:grid-cols-2 xl:grid-cols-3">
                 {list.map((p) => {
                   const sel = selectedPlan === p.id;
                   const gpu = isGpuPlan(p);

@@ -154,7 +154,7 @@ export default function AtlasPage() {
   return (
     <main
       className={cn(
-        "h-screen p-1.5 sm:p-3",
+        "h-[100dvh] overflow-hidden p-1 sm:p-3",
         isMobile ? "flex flex-col" : "grid gap-0",
       )}
       style={
@@ -164,19 +164,19 @@ export default function AtlasPage() {
       }
     >
       <CopilotBridge />
-      <section className="relative min-h-0 flex-1 overflow-hidden rounded-xl border border-line bg-bg/40">
-        <header className="absolute inset-x-0 top-0 z-30 flex items-center gap-2 border-b border-line/40 bg-bg/85 px-2 py-2 backdrop-blur sm:gap-3 sm:px-4 sm:py-2.5">
+      <section className="relative min-h-0 flex-1 overflow-hidden rounded-lg border border-line bg-bg/40 sm:rounded-xl">
+        <header className="absolute inset-x-0 top-0 z-30 flex items-center gap-1.5 border-b border-line/40 bg-bg/85 px-2 py-2 backdrop-blur sm:gap-3 sm:px-4 sm:py-2.5">
           <Link href="/" className="hidden rounded-md border border-line bg-panel/60 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-gray-400 hover:border-accent hover:text-accent sm:inline-block">
             ← home
           </Link>
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <div className="font-mono text-[9px] uppercase tracking-widest text-accent sm:text-[10px]">Vultr Atlas · live cockpit</div>
             <h1 className="truncate text-sm font-semibold leading-tight sm:text-lg">
               {regions.length} regions · {instances.length} servers · {services.length} resources
             </h1>
           </div>
 
-          <div className="ml-auto flex items-center gap-1.5 overflow-x-auto whitespace-nowrap text-[9px] font-mono uppercase tracking-widest sm:gap-2 sm:text-[10px]">
+          <div className="ml-auto flex max-w-[58vw] shrink-0 items-center gap-1.5 overflow-x-auto whitespace-nowrap text-[9px] font-mono uppercase tracking-widest sm:max-w-none sm:gap-2 sm:text-[10px]">
             {cap.count > 0 && (
               <span
                 className="hidden rounded border border-accent/40 bg-panel/60 px-2 py-1 text-accent shadow-glow xl:inline-block"
@@ -215,7 +215,7 @@ export default function AtlasPage() {
           </div>
         </header>
 
-        <div className="absolute inset-0 pt-[48px] sm:pt-[52px]">
+        <div className="absolute inset-0 pt-[50px] sm:pt-[52px]">
           <Globe />
         </div>
 
@@ -329,9 +329,9 @@ export default function AtlasPage() {
       )}
 
       {isMobile && railOpen && (
-        <div className="fixed inset-0 z-50 flex bg-bg/80 backdrop-blur" onClick={() => setRailOpen(false)}>
+        <div className="fixed inset-0 z-50 flex bg-bg/80 p-1 backdrop-blur sm:p-2" onClick={() => setRailOpen(false)}>
           <div
-            className="ml-auto flex h-full w-[92vw] max-w-[480px] flex-col border-l border-line bg-bg p-2"
+            className="ml-auto flex h-[calc(100dvh-0.5rem)] w-full max-w-none flex-col rounded-lg border border-line bg-bg p-2 shadow-glow sm:h-[calc(100dvh-1rem)] sm:max-w-[520px]"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="mb-2 flex items-center justify-between">

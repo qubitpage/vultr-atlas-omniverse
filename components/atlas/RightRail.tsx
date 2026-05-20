@@ -49,41 +49,41 @@ export function RightRail() {
   }, [isAdmin, pane]);
 
   return (
-    <div className="flex h-full flex-col gap-2">
-      <div className="flex shrink-0 items-center gap-1 rounded-lg border border-line bg-panel/60 p-1 font-mono text-[10px] uppercase tracking-widest">
+    <div className="flex h-full min-h-0 flex-col gap-2 overflow-hidden">
+      <div className="flex shrink-0 items-center gap-1 overflow-x-auto rounded-lg border border-line bg-panel/60 p-1 font-mono text-[10px] uppercase tracking-widest scrollbar-thin">
         <button
           onClick={() => setPane("chat")}
           className={cn(
-            "flex flex-1 items-center justify-center gap-1.5 rounded-md px-2 py-1.5 transition",
+            "flex min-w-8 flex-1 items-center justify-center gap-1.5 rounded-md px-2 py-1.5 transition",
             pane === "chat" ? "bg-accent/15 text-accent" : "text-gray-500 hover:text-gray-200",
           )}
           title="GitHub Copilot Chat only"
         >
-          <Bot className="h-3 w-3" /> Copilot
+          <Bot className="h-3 w-3 shrink-0" /> <span className="max-[380px]:hidden">Copilot</span>
         </button>
         <button
           onClick={() => setPane("ide")}
           className={cn(
-            "flex flex-1 items-center justify-center gap-1.5 rounded-md px-2 py-1.5 transition",
+            "flex min-w-8 flex-1 items-center justify-center gap-1.5 rounded-md px-2 py-1.5 transition",
             pane === "ide" ? "bg-accent/15 text-accent" : "text-gray-500 hover:text-gray-200",
           )}
           title="Full VS Code editor"
         >
-          <Code2 className="h-3 w-3" /> IDE
+          <Code2 className="h-3 w-3 shrink-0" /> <span className="max-[380px]:hidden">IDE</span>
         </button>
         <button
           onClick={() => setPane("gemini")}
           className={cn(
-            "flex flex-1 items-center justify-center gap-1.5 rounded-md px-2 py-1.5 transition",
+            "flex min-w-8 flex-1 items-center justify-center gap-1.5 rounded-md px-2 py-1.5 transition",
             pane === "gemini" ? "bg-accent2/15 text-accent2" : "text-gray-500 hover:text-gray-200",
           )}
           title="Gemini Orchestrator"
         >
-          <Sparkles className="h-3 w-3" /> Gemini
+          <Sparkles className="h-3 w-3 shrink-0" /> <span className="max-[380px]:hidden">Gemini</span>
         </button>
         <button
           onClick={() => setReloadKey((k) => k + 1)}
-          className="flex items-center justify-center rounded-md px-1.5 py-1.5 text-gray-500 hover:text-gray-200"
+          className="flex shrink-0 items-center justify-center rounded-md px-1.5 py-1.5 text-gray-500 hover:text-gray-200"
           title="Reload panel"
         >
           <RefreshCw className="h-3 w-3" />
@@ -92,7 +92,7 @@ export function RightRail() {
           href={pane === "chat" ? CHAT_CODE_URL : IDE_CODE_URL}
           target="_blank"
           rel="noreferrer"
-          className="flex items-center justify-center rounded-md px-1.5 py-1.5 text-gray-500 hover:text-gray-200"
+          className="flex shrink-0 items-center justify-center rounded-md px-1.5 py-1.5 text-gray-500 hover:text-gray-200"
           title="Open in a full tab"
         >
           <Maximize2 className="h-3 w-3" />
